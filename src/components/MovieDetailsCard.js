@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { data } from '../assets/data';
 import MovieDetailsTable from './MovieDetailsTable';
 import './Components.css'
