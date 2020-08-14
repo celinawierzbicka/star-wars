@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { data } from '../assets/data';
-import MovieDetailsTable from './MovieDetailsTable';
+import MovieDetailsTableNew from './MovieDetailsTableNew';
 import './Components.css'
 
 const MovieDetailsCard = ({movie}) => {
@@ -13,7 +13,6 @@ const MovieDetailsCard = ({movie}) => {
     }
     const moviePlanets = planets.filter((planet) => selectPlanet(planet))
 
-    //let headings = Object.keys(planets[0]).filter(item => item !== "filmConnection" && item !== 'id');
     const headings = [
         "Planet Name",
         "Rotation priod",
@@ -28,7 +27,7 @@ const MovieDetailsCard = ({movie}) => {
 
 return (
     <div className="movieDetailsCard">
-        <MovieDetailsTable headings={headings} rows={rows} />
+        <MovieDetailsTableNew headings={headings} rows={rows} />
     </div>
 )
 }
