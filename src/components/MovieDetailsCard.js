@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { data } from '../assets/data';
-import MovieDetailsTableNew from './MovieDetailsTableNew';
+import MovieDetailsTable from './MovieDetailsTable';
 import './Components.css'
 
 const MovieDetailsCard = ({movie}) => {
@@ -27,7 +27,7 @@ const MovieDetailsCard = ({movie}) => {
 
 return (
     <div className="movieDetailsCard">
-        <MovieDetailsTableNew headings={headings} rows={rows} />
+        <MovieDetailsTable headings={headings} rows={rows} />
     </div>
 )
 }

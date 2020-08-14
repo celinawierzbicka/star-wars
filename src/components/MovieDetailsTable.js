@@ -1,65 +1,62 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { ChevronUp, ChevronDown } from 'react-feather';
 import './Components.css'
 
-const Cell = ({ content, header, }) => {
-    const cellMarkup = header ? (
-      <th className="cell cell-header">
-        {content}
-      </th>
-    ) : (
-      <td className="cell">
-        {content}
-      </td>
-    );
-  
-    return (cellMarkup);
-}
+const MovieDetailsTableNew = ({ headings, rows }) => { 
 
-const MovieDetailsTable = ({ headings, rows }) => {
-    const renderHeadingRow = (_cell, cellIndex) => {
-    
-        return (
-          <Cell
-            key={`heading-${cellIndex}`}
-            content={headings[cellIndex]}
-            header={true}
-          />
-        )
-      };
-    
-    const renderRow = (_row, rowIndex) => {
+  const [sortedResults, setSortedResults] = useState(rows.map(row => row.map((r, index) => <div className={`rowItem row${index}`} key={`r${index}`}>{r}</div>)))
 
-        return (
-        <tr key={`row-${rowIndex}`}>
-            {rows[rowIndex].map((_cell, cellIndex) => {
-            return (
-                <Cell
-                key={`${rowIndex}-${cellIndex}`}
-                content={rows[rowIndex][cellIndex]}
-                />
-            )
-            })}
-        </tr>
-        )
-    };
-    
-    const theadMarkup = (
-    <tr key="heading">
-        {headings.map(renderHeadingRow)}
-    </tr>
-    );
+  //Convert climates array to a string sepatated by ", "
+  // rows.map(r => r[4] = r[4].join(', '));
 
-    const tbodyMarkup = rows.map(renderRow);
+  const renderData = row => {
+    const heads = headings.map((heading, index) => {
+      return (
+        <div className={`headingItem heading${index}`} key={`h${index}`}>
+            {heading}
+        </div>)}
+      );
+    const rows = row.map((r, index) => <div className={`rowItem row${index}`} key={`r${index}`}>{r}</div>);
+    const results = heads.concat(rows);
 
+    return results
+  }
+  const sortRowsUp = index => {
+    const results = bodyMarkup.sort(function(a, b){
+      return (a[index].props.children === b[index].props.children ? 0 : (a[index].props.children < b[index].props.children ? -1 : 1))
+    })
+    setSortedResults(results)
+  }
+
+  const sortRowsDown = index => {
+    const results = bodyMarkup.sort(function(a, b){
+      return (a[index].props.children === b[index].props.children ? 0 : (a[index].props.children < b[index].props.children ? 1 : -1))
+    })
+    setSortedResults(results)
+  }
+
+  const bodyMarkup = rows.map(row => row.map((r, index) => <div className={`rowItem row${index}`} key={`r${index}`}>{r}</div>));
+  const headMarkup = headings.map((heading, index) => {
     return (
-        <div className="data-table">
-            <table className="table">
-                <thead className="tableHead">{theadMarkup}</thead>
-                <tbody>{tbodyMarkup}</tbody>
-            </table>
-        </div>
-    );
+      <div className={`headingItem heading${index}`} key={`h${index}`}>
+          {heading}
+          <div className="chevrons">
+            <ChevronUp className="chevron" size={12} key={`up${index}`} onClick={() => sortRowsDown(index)}/>
+            <ChevronDown className="chevron" size={12} key={`down${index}`} onClick={() => sortRowsUp(index)}/>
+          </div>
+      </div>)}
+    )
+  const mobileMarkup = rows.map((row, index) => <div className="grid-wrapper-mobile" key={`r${index}`}>{renderData(row)}</div>);
+
+  return (
+    <>
+      <div className="grid-wrapper">
+          {headMarkup}
+          {sortedResults}
+      </div>
+      {mobileMarkup}
+    </>
+  );
 }
 
-export default MovieDetailsTable;
+export default MovieDetailsTableNew;
